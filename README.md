@@ -1,12 +1,14 @@
 # Multiview-Avatar
 repository for multiview character generation based on SDv1.5
 
-# ![test](data/test.jpg "test result")
+# ![spider man](data/test-spider-man.jpg "spider man")
+# ![iron man](data/test-iron-man.jpg "iron man")
 
 ## Requirements
 - diffusers
 - torch
 - xformers
+- 16GB GPU
 
 
 ## Installation
@@ -18,7 +20,7 @@ python setup.py develop
 
 ## Getting Started
 ### Download Models
-Download models from [Baidu Disk](https://pan.baidu.com/s/1RPHZitmrKIxwuEYadimo4Q?pwd=xs2i). Unzip `models.zip` into the root directory of the project.
+Download models from [Baidu Disk](https://pan.baidu.com/s/1RPHZitmrKIxwuEYadimo4Q?pwd=xs2i) or [Google Drive](https://drive.google.com/file/d/1_LWfcVNZM4ASiQ2lCgegwooMhdU5Wli7/view?usp=share_link). Unzip `models.zip` into the root directory of the project.
 ```
 ${ROOT}  
 |-- data  
@@ -32,6 +34,7 @@ ${ROOT}
 |-- mvavatar
 |...
 ```
+Or download the models from [hugging face](https://huggingface.co/Jinlin123/Multiview-Avatar).
 
 ### Inference
 ```

@@ -16,6 +16,9 @@ class MVAvatar(torch.nn.Module):
         description_type: str = 'base_description',
         seed: int = -1,
     ):
+        if seed > 65535 or seed < 0:
+            seed = random.randint(0, 65535)
+
         random.seed(seed)
         description = self.wildcards[description_type]
         num = len(description)
@@ -57,6 +60,7 @@ class MVAvatar(torch.nn.Module):
 
         self.pipe.scheduler = UniPCMultistepScheduler.from_config(self.pipe.scheduler.config)
         self.pipe.enable_xformers_memory_efficient_attention()
+        # self.pipe.vae.enable_tiling()
 
         self.pose = Image.open(os.path.join(model_path, 'control-imgs/pose.png')).convert('RGB')
         self.edge = Image.open(os.path.join(model_path, 'control-imgs/edge.png')).convert('RGB')
@@ -65,23 +69,23 @@ class MVAvatar(torch.nn.Module):
         base_description = base.readlines()
         base_description = [x[:-1] for x in base_description]
 
-        special_costume = open(os.path.join(model_path, 'wildcards/special_costume.txt'), 'r')
+        special_costume = open(os.path.join(model_path, 'wildcards/special_costume.txt'), 'r', encoding="utf-8")
         special_costume_description = special_costume.readlines()
         special_costume_description = [x[:-1] for x in special_costume_description]
 
-        color = open(os.path.join(model_path, 'wildcards/color.txt'), 'r')
+        color = open(os.path.join(model_path, 'wildcards/color.txt'), 'r', encoding="utf-8")
         color_description = color.readlines()
         color_description = [x[:-1] for x in color_description]
 
-        race = open(os.path.join(model_path, 'wildcards/race.txt'), 'r')
+        race = open(os.path.join(model_path, 'wildcards/race.txt'), 'r', encoding="utf-8")
         race_description = race.readlines()
         race_description = [x[:-1] for x in race_description]
 
-        style = open(os.path.join(model_path, 'wildcards/style.txt'), 'r')
+        style = open(os.path.join(model_path, 'wildcards/style.txt'), 'r', encoding="utf-8")
         style_description = style.readlines()
         style_description = [x[:-1] for x in style_description]
 
-        other = open(os.path.join(model_path, 'wildcards/other.txt'), 'r')
+        other = open(os.path.join(model_path, 'wildcards/other.txt'), 'r', encoding="utf-8")
         other_description = other.readlines()
         other_description = [x[:-1] for x in other_description]
 
@@ -100,8 +104,8 @@ class MVAvatar(torch.nn.Module):
     def inference(
             self,
             prompt: str = None,
-            width: Optional[int] = 4032,
-            height: Optional[int] = 864,
+            width: Optional[int] = 560 * 7,
+            height: Optional[int] = 800,
             sample_steps: Optional[int] = 20,
             n_prompt: Optional[str] = None,
             seed: Optional[int] = -1,
@@ -138,7 +142,7 @@ class MVAvatar(torch.nn.Module):
                        "wrong anatomy, extra limb, missing limb, floating limbs, disconnected limbs, mutation, " \
                        "mutated, ugly, disgusting, amputation"
 
-        if seed == -1:
+        if seed < 0 or seed > 65535:
             generator = torch.Generator(device=self.pipe.device).manual_seed(torch.seed())
         else:
             generator = torch.Generator(device=self.pipe.device).manual_seed(seed)
