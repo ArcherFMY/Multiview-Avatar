@@ -5,9 +5,14 @@ repository for multiview character generation based on SDv1.5
 # ![iron man](data/test-iron-man.jpg "iron man")
 
 ## Requirements
-- diffusers
 - torch
+- torchvision
+- torchaudio
+- diffusers
+- accelerate
 - xformers
+- triton
+- transformers
 - 16GB GPU
 
 
@@ -15,7 +20,7 @@ repository for multiview character generation based on SDv1.5
 ```
 git clone https://github.com/ArcherFMY/Multiview-Avatar.git
 cd Multiview-Avatar
-python setup.py develop
+pip install -r requirements.txt
 ```
 
 ## Getting Started
