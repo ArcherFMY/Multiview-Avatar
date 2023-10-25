@@ -39,7 +39,7 @@ ${ROOT}
 |-- mvavatar
 |...
 ```
-Or download the models from [hugging face](https://huggingface.co/Jinlin123/Multiview-Avatar).
+Or download the models from hugging face ([link1](https://huggingface.co/archerfmy0831/Multiview-Avatar) or [link2](https://huggingface.co/Jinlin123/Multiview-Avatar)).
 
 ### Inference
 ```
